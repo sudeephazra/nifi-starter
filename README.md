@@ -3,32 +3,6 @@ Docker image containing all the bells and whistles to explore NiFi without any c
 
 ## Getting Started
 
-### To build the Image
-Clone the project
-```
-git clone https://github.com/sudeephazra/nifi-starter.git .
-```
-Download all the necessary library files 
-Build the image
-```
-docker build -t nifi-starter:<tag> .
-```
-Run the image
-```
-docker run --name nifi-custom -p 8443:8443 -d nifi-starter:<tag>
-```
-Run the image from Windows and map a location on the host to the container
-```
-docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d nifi-starter:<tag>
-```
-This will map the folder C:\temp to /var/tmp of the container. To validate this, 
-- Place a file in C:\temp  
-- Run the following commands to check the same file exists in /var/tmp of the container
-```
-docker exec -it nifi-custom /bin/bash
-cd /var/tmp
-ls -l
-```
 ### Sample dataflow to load data from a Parquet file into a PostgreSQL database 
 
 Now let us run a sample flow to read a Parquet file and load the data into a PostgreSQL database on our Windows machine
@@ -69,6 +43,32 @@ docker network connect nifi-starter-network postgres-db
 ![Dataflow](examples/load_parquet_postgres/sample_workflow.png)
 9.  Check the database for data to be loaded into the *public.userdata* table and the original file being deleted after being read
 
+### To build the Image
+Clone the project
+```
+git clone https://github.com/sudeephazra/nifi-starter.git .
+```
+Download all the necessary library files 
+Build the image
+```
+docker build -t nifi-starter:<tag> .
+```
+Run the image
+```
+docker run --name nifi-custom -p 8443:8443 -d nifi-starter:<tag>
+```
+Run the image from Windows and map a location on the host to the container
+```
+docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d nifi-starter:<tag>
+```
+This will map the folder C:\temp to /var/tmp of the container. To validate this, 
+- Place a file in C:\temp  
+- Run the following commands to check the same file exists in /var/tmp of the container
+```
+docker exec -it nifi-custom /bin/bash
+cd /var/tmp
+ls -l
+```
 
 ## Custom Processors Added
 - Greenplum
