@@ -42,7 +42,7 @@ docker network connect nifi-starter-network nifi-custom
 docker network connect nifi-starter-network postgres-db
 ```
 6. Place the parquet file in C:\temp
-7. Go to *https://localhost:8443/nifi* one the Jetty server has started
+7. Go to *https://localhost:8443/nifi* once the Jetty server has started.   
 To check the availability of the UI, check for the below message in the logs
 ```
 1900-01-01 07:10:54,625 INFO [main] org.apache.nifi.web.server.JettyServer NiFi has started. The UI is available at the following URLs:
