@@ -29,7 +29,7 @@ docker exec -it nifi-custom /bin/bash
 cd /var/tmp
 ls -l
 ```
-### Sample dataflow to load data from a Parquet file into a PostgreSQL database
+### Sample dataflow to load data from a Parquet file into a PostgreSQL database 
 
 Now let us run a sample flow to read a Parquet file and load the data into a PostgreSQL database on our Windows machine
 - The sample parquet data file is available under *examples/load_parquet_postgres/userdata1.parquet* in this repository
@@ -45,8 +45,14 @@ docker run --name postgres-db -p 5432:5432 -e POSTGRES_PASSWORD=password -d post
 2. Login to the database using any client like DBeaver and create a table using the query from above *(userdata.sql)*
 3. Spin-up a NiFi Starter container 
 ```
+docker pull sudeephazra/nifi-starter
 mkdir c:\temp
 docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d nifi-starter:<tag>
+```
+Check the container logs for the login username and password. It will be something like the below
+```
+Generated Username [a41c5ea8-255c-447b-93f6-1f5d9f564ae7]
+Generated Password [HjAGLfwkjVE4+2+cpv5orIkP2Qvof8yh]
 ```
 4. Create a new network
 ```
