@@ -23,7 +23,11 @@ docker pull sudeephazra/nifi-starter
 mkdir c:\temp
 docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d nifi-starter:<tag>
 ```
-Check the container logs for the login username and password. It will be something like the below
+Check the container logs for the login username and password. 
+```
+docker logs nifi-custom
+```
+It will be something like the below
 ```
 Generated Username [a41c5ea8-255c-447b-93f6-1f5d9f564ae7]
 Generated Password [HjAGLfwkjVE4+2+cpv5orIkP2Qvof8yh]
@@ -38,7 +42,12 @@ docker network connect nifi-starter-network nifi-custom
 docker network connect nifi-starter-network postgres-db
 ```
 6. Place the parquet file in C:\temp
-7. Go to *https://localhost:8443/nifi*
+7. Go to *https://localhost:8443/nifi* one the Jetty server has started
+To check the availability of the UI, check for the below message in the logs
+```
+1900-01-01 07:10:54,625 INFO [main] org.apache.nifi.web.server.JettyServer NiFi has started. The UI is available at the following URLs:
+1900-01-01 07:10:54,625 INFO [main] org.apache.nifi.web.server.JettyServer https://9abc3458c57:8443/nifi
+```
 8. Create the dataflow as per the config file *(dataflow.json)* and run the flow
 ![Dataflow](examples/load_parquet_postgres/sample_workflow.png)
 9.  Check the database for data to be loaded into the *public.userdata* table and the original file being deleted after being read
@@ -49,9 +58,11 @@ Clone the project
 git clone https://github.com/sudeephazra/nifi-starter.git .
 ```
 Download all the necessary library files 
-Build the image
+Build the image, tag it and push it to the registry 
 ```
 docker build -t nifi-starter:<tag> .
+docker tag sudeephazra/nifi-starter:0.0.1 sudeephazra/nifi-starter:latest
+docker push sudeephazra/nifi-starter:latest
 ```
 Run the image
 ```
@@ -76,65 +87,65 @@ ls -l
 ## Supported Databases Out-Of-The-Box
 
 ### MySQL
-**Classname**: com.mysql.jdbc.Driver
-**Connection String**: jdbc:mysql://server-name:server-port/database-name
-**Reference**: https://docs.oracle.com/cd/E19509-01/820-3497/agqju/index.html
+**Classname**: com.mysql.jdbc.Driver   
+**Connection String**: jdbc:mysql://server-name:server-port/database-name   
+**Reference**: https://docs.oracle.com/cd/E19509-01/820-3497/agqju/index.html   
 
 ### PostgreSQL
-**Classname**: org.postgresql.Driver
-**Connection String**: jdbc:postgresql://server-name:server-port/database-name
-**Reference**: https://docs.oracle.com/cd/E19509-01/820-3497/agqka/index.html
+**Classname**: org.postgresql.Driver   
+**Connection String**: jdbc:postgresql://server-name:server-port/database-name   
+**Reference**: https://docs.oracle.com/cd/E19509-01/820-3497/agqka/index.html   
 
 ### SQL Server
-**Classname**: com.microsoft.sqlserver.jdbc.SQLServerDriver
-**Connection String**: jdbc:sqlserver://server-name:server-port;databaseName=database-name
-**Reference**: https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server
+**Classname**: com.microsoft.sqlserver.jdbc.SQLServerDriver   
+**Connection String**: jdbc:sqlserver://server-name:server-port;databaseName=database-name   
+**Reference**: https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server   
 
 ### Oracle
-**Classname**: com.microsoft.sqlserver.jdbc.SQLServerDriver
-**Connection String**: jdbc:sqlserver://server-name:server-port;databaseName=database-name
-**Reference**: https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server
+**Classname**: com.microsoft.sqlserver.jdbc.SQLServerDriver   
+**Connection String**: jdbc:sqlserver://server-name:server-port;databaseName=database-name   
+**Reference**: https://docs.microsoft.com/en-us/sql/connect/jdbc/microsoft-jdbc-driver-for-sql-server   
 
 ### SQLite
-**Classname**: org.sqlite.JDBC
-**Connection String**: jdbc:sqlite:database-file
-**Reference**: https://www.tutorialspoint.com/sqlite/sqlite_java.htm
+**Classname**: org.sqlite.JDBC   
+**Connection String**: jdbc:sqlite:database-file   
+**Reference**: https://www.tutorialspoint.com/sqlite/sqlite_java.htm   
 
 ### Apache Derby
 #### Network
-**Classname**: org.apache.derby.jdbc.ClientDriver
-**Connection String**: jdbc:derby://server-name:server-port/database-name
-**Reference**: https://db.apache.org/derby/docs/10.4/devguide/cdevdvlp40653.html
+**Classname**: org.apache.derby.jdbc.ClientDriver   
+**Connection String**: jdbc:derby://server-name:server-port/database-name   
+**Reference**: https://db.apache.org/derby/docs/10.4/devguide/cdevdvlp40653.html   
 #### Embedded
-**Classname**: org.apache.derby.jdbc.EmbeddedDriver
-**Connection String**: jdbc:derby:database-file
-**Reference**: https://db.apache.org/derby/docs/10.4/devguide/cdevdvlp40653.html
+**Classname**: org.apache.derby.jdbc.EmbeddedDriver   
+**Connection String**: jdbc:derby:database-file   
+**Reference**: https://db.apache.org/derby/docs/10.4/devguide/cdevdvlp40653.html    
 
 
 ### Firebird
-**Classname**: org.firebirdsql.jdbc.FBDriver
-**Connection String**: jdbc:firebirdsql://server-name:server-port/database-file
-**Reference**: https://firebirdsql.github.io/jaybird-manual/jaybird_manual.html
+**Classname**: org.firebirdsql.jdbc.FBDriver   
+**Connection String**: jdbc:firebirdsql://server-name:server-port/database-file   
+**Reference**: https://firebirdsql.github.io/jaybird-manual/jaybird_manual.html   
 
 ### MariaDB
-**Classname**: org.mariadb.jdbc.Driver
-**Connection String**: jdbc:mariadb://server-name:server-port/database-name
-**Reference**: https://mariadb.com/kb/en/about-mariadb-connector-j/
+**Classname**: org.mariadb.jdbc.Driver   
+**Connection String**: jdbc:mariadb://server-name:server-port/database-name   
+**Reference**: https://mariadb.com/kb/en/about-mariadb-connector-j/   
 
 ### Cockroach DB
-**Classname**: org.postgresql.Driver
-**Connection String**: jdbc:postgresql://server-name:server-port/database-name
-**Reference**: https://www.cockroachlabs.com/docs/v21.2/install-client-drivers.html?filters=java
+**Classname**: org.postgresql.Driver   
+**Connection String**: jdbc:postgresql://server-name:server-port/database-name   
+**Reference**: https://www.cockroachlabs.com/docs/v21.2/install-client-drivers.html?filters=java    
 
 ### Yugabyte
-**Classname**: java.sql.DriverManager
-**Connection String**: jdbc:yugabytedb://server-name:server-port/database-name
-**Reference**: https://docs.yugabyte.com/preview/drivers-orms/java/yugabyte-jdbc/
+**Classname**: java.sql.DriverManager    
+**Connection String**: jdbc:yugabytedb://server-name:server-port/database-name   
+**Reference**: https://docs.yugabyte.com/preview/drivers-orms/java/yugabyte-jdbc/    
 
 ### Greenplum
-**Classname**: org.postgresql.Driver
-**Connection String**: jdbc:postgresql://server-name:server-port/database-name
-**Reference**: https://greenplum.docs.pivotal.io/pxf/6-0/using/jdbc_cfg.html
+**Classname**: org.postgresql.Driver   
+**Connection String**: jdbc:postgresql://server-name:server-port/database-name   
+**Reference**: https://greenplum.docs.pivotal.io/pxf/6-0/using/jdbc_cfg.html   
 
 CHANGELOG:
 
