@@ -1,6 +1,8 @@
 # nifi-starter
 Docker image containing all the bells and whistles to explore NiFi without any configuration
 
+Image available at https://hub.docker.com/repository/docker/sudeephazra/nifi-starter
+
 ## Getting Started
 
 ### Sample dataflow to load data from a Parquet file into a PostgreSQL database 
