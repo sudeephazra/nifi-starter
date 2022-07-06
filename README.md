@@ -23,7 +23,7 @@ docker run --name postgres-db -p 5432:5432 -e POSTGRES_PASSWORD=password -d post
 ```
 docker pull sudeephazra/nifi-starter
 mkdir c:\temp
-docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d nifi-starter:<tag>
+docker run --name nifi-custom -v c:/temp:/var/tmp -p 8443:8443 -d sudeephazra/nifi-starter
 ```
 Check the container logs for the login username and password. 
 ```
